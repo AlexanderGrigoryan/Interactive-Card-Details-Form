@@ -1,21 +1,10 @@
 import React from "react";
-import styled, { createGlobalStyle } from "styled-components";
+import styled from "styled-components";
+import GlobalStyles from "./components/GlobalStyles";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import mobileBackground from "./img/bg-main-mobile.png";
 import Cards from "./components/Cards";
-
-const GlobalStyles = createGlobalStyle`
-
-*{
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  font-family: 'Space Grotesk', sans-serif;
-}
-`;
+import Form from "./components/Form";
 
 function App() {
   return (
@@ -30,16 +19,19 @@ function App() {
         </Helmet>
       </HelmetProvider>
 
-      <MainContainer>
+      <Wrapper>
         <Cards />
-      </MainContainer>
+      </Wrapper>
+      <FormWrapper>
+        <Form />
+      </FormWrapper>
     </>
   );
 }
 
 export default App;
 
-const MainContainer = styled.main`
+const Wrapper = styled.div`
   background: url(${mobileBackground});
   background-size: cover;
   background-repeat: no-repeat;
@@ -50,4 +42,9 @@ const MainContainer = styled.main`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin-bottom: 90px;
+`;
+
+const FormWrapper = styled.div`
+  padding: 0 24px;
 `;
