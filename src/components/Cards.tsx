@@ -1,24 +1,45 @@
 import React from "react";
+import { UseFormWatch } from "react-hook-form/dist/types/form";
 import styled from "styled-components";
+import { FormTypes } from "../App";
 import cardBackImage from "../img/bg-card-back.png";
 import cardFrontImage from "../img/bg-card-front.png";
 
-function Cards() {
+interface CardsProps {
+  watch: UseFormWatch<FormTypes>;
+}
+
+function Cards(props: CardsProps) {
+  const { watch } = props;
+
+  const displayCardNumber = watch("cardnumber");
+  const displayCardholder = watch("cardholder");
+  const displayCvcCode = watch("cvcinput");
+  const displayMonth = watch("monthinput");
+  const displayYear = watch("yearinput");
+
   return (
     <Container>
       <CardsBlock>
         <CardBack>
-          <CvcCode>000</CvcCode>
+          <CvcCode>{displayCvcCode ? displayCvcCode : "000"}</CvcCode>
         </CardBack>
         <CardFront>
           <Circles>
             <BigCircle></BigCircle>
             <SmallCircle></SmallCircle>
           </Circles>
-          <CardNumber>0000 0000 0000 0000</CardNumber>
+          <CardNumber>
+            {displayCardNumber ? displayCardNumber : "0000 0000 0000 0000"}
+          </CardNumber>
           <CardInfo>
-            <Cardholder>JANE APPLESEED</Cardholder>
-            <CardDate>00/00</CardDate>
+            <Cardholder>
+              {displayCardholder ? displayCardholder : "JANE APPLESEED"}
+            </Cardholder>
+            <CardDate>
+              {displayMonth ? displayMonth : "00"}/
+              {displayYear ? displayYear : "00"}
+            </CardDate>
           </CardInfo>
         </CardFront>
       </CardsBlock>

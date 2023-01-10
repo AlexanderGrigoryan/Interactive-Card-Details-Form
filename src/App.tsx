@@ -5,8 +5,21 @@ import { Helmet, HelmetProvider } from "react-helmet-async";
 import mobileBackground from "./img/bg-main-mobile.png";
 import Cards from "./components/Cards";
 import Form from "./components/Form";
+import { useForm } from "react-hook-form";
+import { SubmitHandler } from "react-hook-form/dist/types";
+
+export interface FormTypes {
+  cardholder: string;
+  cardnumber: number;
+  monthinput: number;
+  yearinput: number;
+  cvcinput: number;
+}
 
 function App() {
+  const { register, handleSubmit, watch } = useForm<FormTypes>();
+  const onSubmit: SubmitHandler<FormTypes> = (data) => console.log(data);
+
   return (
     <>
       <GlobalStyles />
@@ -20,10 +33,14 @@ function App() {
       </HelmetProvider>
 
       <Wrapper>
-        <Cards />
+        <Cards watch={watch} />
       </Wrapper>
       <FormWrapper>
-        <Form />
+        <Form
+          register={register}
+          handleSubmit={handleSubmit}
+          onSubmit={onSubmit}
+        />
       </FormWrapper>
     </>
   );

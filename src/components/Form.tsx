@@ -1,18 +1,30 @@
 import React from "react";
+import { UseFormRegister } from "react-hook-form/dist/types";
+import {
+  SubmitHandler,
+  UseFormHandleSubmit,
+} from "react-hook-form/dist/types/form";
 import styled from "styled-components";
-import { useForm } from "react-hook-form";
+import { FormTypes } from "../App";
 
-function Form() {
-  const { register, handleSubmit } = useForm();
+interface FormProps {
+  register: UseFormRegister<FormTypes>;
+  handleSubmit: UseFormHandleSubmit<FormTypes>;
+  onSubmit: SubmitHandler<FormTypes>;
+}
+
+function Form(props: FormProps) {
+  const { register, handleSubmit, onSubmit } = props;
 
   return (
-    <FormContainer>
+    <FormContainer onSubmit={handleSubmit(onSubmit)}>
       <Cardholder>
         <Label htmlFor="cardholder">Cardholder Name</Label>
         <CardholderInput
           type="text"
           id="cardholder"
           placeholder="e.g. Jane Appleseed"
+          {...register("cardholder")}
         ></CardholderInput>
       </Cardholder>
       <CardNumber>
@@ -21,19 +33,34 @@ function Form() {
           type="number"
           id="cardnumber"
           placeholder="e.g. 1234 5678 9123 0000"
+          {...register("cardnumber")}
         ></CardNumberInput>
       </CardNumber>
       <Info>
         <CardDate>
           <Label htmlFor="monthinput">Exp. Date (MM/YY)</Label>
           <Date>
-            <MonthInput type="number" id="monthinput" placeholder="MM" />
-            <YearInput type="number" placeholder="YY" />
+            <MonthInput
+              type="number"
+              id="monthinput"
+              placeholder="MM"
+              {...register("monthinput")}
+            />
+            <YearInput
+              type="number"
+              placeholder="YY"
+              {...register("yearinput")}
+            />
           </Date>
         </CardDate>
         <Cvc>
           <Label htmlFor="cvcinput">CVC</Label>
-          <CvcInput type="number" id="cvcinput" placeholder="e.g. 123" />
+          <CvcInput
+            type="number"
+            id="cvcinput"
+            placeholder="e.g. 123"
+            {...register("cvcinput")}
+          />
         </Cvc>
       </Info>
       <SubmitButton type="submit">Confirm</SubmitButton>
