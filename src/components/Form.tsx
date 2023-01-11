@@ -1,5 +1,9 @@
 import React from "react";
-import { UseFormRegister } from "react-hook-form/dist/types";
+import {
+  FieldErrorsImpl,
+  FieldValues,
+  UseFormRegister,
+} from "react-hook-form/dist/types";
 import {
   SubmitHandler,
   UseFormHandleSubmit,
@@ -11,10 +15,11 @@ interface FormProps {
   register: UseFormRegister<FormTypes>;
   handleSubmit: UseFormHandleSubmit<FormTypes>;
   onSubmit: SubmitHandler<FormTypes>;
+  errors: Partial<FieldErrorsImpl<FormTypes>>;
 }
 
 function Form(props: FormProps) {
-  const { register, handleSubmit, onSubmit } = props;
+  const { register, handleSubmit, onSubmit, errors } = props;
 
   return (
     <FormContainer onSubmit={handleSubmit(onSubmit)}>
@@ -25,7 +30,8 @@ function Form(props: FormProps) {
           id="cardholder"
           placeholder="e.g. Jane Appleseed"
           {...register("cardholder")}
-        ></CardholderInput>
+        />
+        <Error>{errors.cardholder && errors.cardholder?.message}</Error>
       </Cardholder>
       <CardNumber>
         <Label htmlFor="cardnumber">Card Number</Label>
@@ -34,23 +40,30 @@ function Form(props: FormProps) {
           id="cardnumber"
           placeholder="e.g. 1234 5678 9123 0000"
           {...register("cardnumber")}
-        ></CardNumberInput>
+        />
+        <Error>{errors.cardnumber && errors.cardnumber?.message}</Error>
       </CardNumber>
       <Info>
         <CardDate>
           <Label htmlFor="monthinput">Exp. Date (MM/YY)</Label>
           <Date>
-            <MonthInput
-              type="number"
-              id="monthinput"
-              placeholder="MM"
-              {...register("monthinput")}
-            />
-            <YearInput
-              type="number"
-              placeholder="YY"
-              {...register("yearinput")}
-            />
+            <MonthInputContainer>
+              <MonthInput
+                type="number"
+                id="monthinput"
+                placeholder="MM"
+                {...register("monthinput")}
+              />
+              <Error>{errors.monthinput && errors.yearinput?.message}</Error>
+            </MonthInputContainer>
+            <YearInputContainer>
+              <YearInput
+                type="number"
+                placeholder="YY"
+                {...register("yearinput")}
+              />
+              <Error>{errors.yearinput && errors.yearinput?.message}</Error>
+            </YearInputContainer>
           </Date>
         </CardDate>
         <Cvc>
@@ -61,6 +74,7 @@ function Form(props: FormProps) {
             placeholder="e.g. 123"
             {...register("cvcinput")}
           />
+          <Error>{errors.cvcinput && errors.cvcinput?.message}</Error>
         </Cvc>
       </Info>
       <SubmitButton type="submit">Confirm</SubmitButton>
@@ -113,6 +127,10 @@ const CardholderInput = styled.input`
     color: #21092f;
     opacity: 0.25;
   }
+
+  &:focus {
+    outline: 1px solid #6348fe;
+  }
 `;
 
 const CardNumber = styled.div`
@@ -141,6 +159,10 @@ const CardNumberInput = styled.input`
     color: #21092f;
     opacity: 0.25;
   }
+
+  &:focus {
+    outline: 1px solid #6348fe;
+  }
 `;
 
 const Info = styled.div`
@@ -155,6 +177,11 @@ const Date = styled.div`
   display: flex;
   column-gap: 8px;
   margin-top: 9px;
+`;
+
+const MonthInputContainer = styled.div`
+  display: flex;
+  flex-direction: column;
 `;
 
 const MonthInput = styled.input`
@@ -179,6 +206,15 @@ const MonthInput = styled.input`
     color: #21092f;
     opacity: 0.25;
   }
+
+  &:focus {
+    outline: 1px solid #6348fe;
+  }
+`;
+
+const YearInputContainer = styled.div`
+  display: flex;
+  flex-direction: column;
 `;
 
 const YearInput = styled.input`
@@ -202,6 +238,10 @@ const YearInput = styled.input`
     line-height: 23px;
     color: #21092f;
     opacity: 0.25;
+  }
+
+  &:focus {
+    outline: 1px solid #6348fe;
   }
 `;
 
@@ -233,6 +273,10 @@ const CvcInput = styled.input`
     color: #21092f;
     opacity: 0.25;
   }
+
+  &:focus {
+    outline: 1px solid #6348fe;
+  }
 `;
 
 const SubmitButton = styled.button`
@@ -248,4 +292,12 @@ const SubmitButton = styled.button`
   line-height: 23px;
   margin-top: 8px;
   color: #ffffff;
+`;
+
+const Error = styled.p`
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 15px;
+  color: #ff5050;
+  margin-top: 8px;
 `;

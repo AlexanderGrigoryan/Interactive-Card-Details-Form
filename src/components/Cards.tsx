@@ -1,4 +1,5 @@
 import React from "react";
+import { FieldErrorsImpl, FieldValues } from "react-hook-form";
 import { UseFormWatch } from "react-hook-form/dist/types/form";
 import styled from "styled-components";
 import { FormTypes } from "../App";
@@ -34,7 +35,9 @@ function Cards(props: CardsProps) {
           </CardNumber>
           <CardInfo>
             <Cardholder>
-              {displayCardholder ? displayCardholder : "JANE APPLESEED"}
+              {displayCardholder
+                ? displayCardholder.toUpperCase()
+                : "JANE APPLESEED"}
             </Cardholder>
             <CardDate>
               {displayMonth ? displayMonth : "00"}/
@@ -43,6 +46,7 @@ function Cards(props: CardsProps) {
           </CardInfo>
         </CardFront>
       </CardsBlock>
+      
     </Container>
   );
 }
@@ -144,3 +148,5 @@ const CardDate = styled.p`
   letter-spacing: 1.2857142686843872px;
   color: #ffffff;
 `;
+
+const Error = styled.p``;
