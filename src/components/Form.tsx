@@ -36,7 +36,7 @@ function Form(props: FormProps) {
       <CardNumber>
         <Label htmlFor="cardnumber">Card Number</Label>
         <CardNumberInput
-          type="number"
+          type="text"
           id="cardnumber"
           placeholder="e.g. 1234 5678 9123 0000"
           {...register("cardnumber")}
@@ -49,16 +49,16 @@ function Form(props: FormProps) {
           <Date>
             <MonthInputContainer>
               <MonthInput
-                type="number"
+                type="text"
                 id="monthinput"
                 placeholder="MM"
                 {...register("monthinput")}
               />
-              <Error>{errors.monthinput && errors.yearinput?.message}</Error>
+              <Error>{errors.monthinput && errors.monthinput?.message}</Error>
             </MonthInputContainer>
             <YearInputContainer>
               <YearInput
-                type="number"
+                type="text"
                 placeholder="YY"
                 {...register("yearinput")}
               />
@@ -69,7 +69,7 @@ function Form(props: FormProps) {
         <Cvc>
           <Label htmlFor="cvcinput">CVC</Label>
           <CvcInput
-            type="number"
+            type="text"
             id="cvcinput"
             placeholder="e.g. 123"
             {...register("cvcinput")}

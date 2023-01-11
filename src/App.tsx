@@ -19,35 +19,30 @@ export interface FormTypes {
 }
 
 const schema = yup.object({
-  cardholder: yup.string().required("Can’t be blank"),
+  cardholder: yup
+    .string()
+    .required("Can’t be blank")
+    .matches(/^[A-Za-z\s]*$/, "Wrong formats, letters only"),
   cardnumber: yup
-    .number()
-    .positive("Wrong format, can be only positive numbers")
-    .integer("Wrong format, can be only integer numbers")
-    .lessThan(10 ** 12, "Wrong format, only 12 digits")
+    .string()
     .required("Can’t be blank")
-    .typeError("Wrong formats, numbers only"),
+    .matches(/^[0-9]*$/, "Wrong formats, numbers only")
+    .length(12, "Should be 12 digits"),
   monthinput: yup
-    .number()
-    .positive("Wrong format, can be only positive numbers")
-    .integer("Wrong format, can be only integer numbers")
-    .max(2, "Wrong format, only 2 digits")
+    .string()
     .required("Can’t be blank")
-    .typeError("Wrong formats, numbers only"),
+    .matches(/^[0-9]*$/, "Wrong formats, numbers only")
+    .length(2, "Should be 2 digits"),
   yearinput: yup
-    .number()
-    .positive("Wrong format, can be only positive numbers")
-    .integer("Wrong format, can be only integer numbers")
-    .max(2, "Wrong format, only 2 digits")
+    .string()
     .required("Can’t be blank")
-    .typeError("Wrong formats, numbers only"),
+    .matches(/^[0-9]*$/, "Wrong formats, numbers only")
+    .length(2, "Should be 2 digits"),
   cvcinput: yup
-    .number()
-    .positive("Wrong format, can be only positive numbers")
-    .integer("Wrong format, can be only integer numbers")
-    .max(3, "Wrong format, only 3 digits")
+    .string()
     .required("Can’t be blank")
-    .typeError("Wrong formats, numbers only"),
+    .matches(/^[0-9]*$/, "Wrong formats, numbers only")
+    .length(3, "Should be 3 digits"),
 });
 function App() {
   const {
