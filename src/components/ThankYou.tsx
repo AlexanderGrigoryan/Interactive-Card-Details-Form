@@ -1,6 +1,6 @@
 import React from "react";
-import { UseFormReset } from "react-hook-form";
 import styled from "styled-components";
+import { UseFormReset } from "react-hook-form";
 import { FormTypes } from "../App";
 import completeIcon from "../img/icon-complete.svg";
 
@@ -16,6 +16,7 @@ function ThankYou(props: Props) {
     setSubmitted(false);
     reset();
   };
+  
   return (
     <Container>
       <Icon src={completeIcon} alt="complete icon" />

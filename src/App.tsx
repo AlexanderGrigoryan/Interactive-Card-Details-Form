@@ -1,16 +1,16 @@
-import React, { useState } from "react";
 import styled from "styled-components";
 import GlobalStyles from "./components/GlobalStyles";
+import { useState } from "react";
 import { Helmet, HelmetProvider } from "react-helmet-async";
-import mobileBackground from "./img/bg-main-mobile.png";
-import desktopBackground from "./img/bg-main-desktop.png";
+import { useForm } from "react-hook-form";
+import { SubmitHandler } from "react-hook-form/dist/types";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
 import Cards from "./components/Cards";
 import Form from "./components/Form";
-import { useForm } from "react-hook-form";
-import { FieldValues, SubmitHandler } from "react-hook-form/dist/types";
-import * as yup from "yup";
-import { yupResolver } from "@hookform/resolvers/yup";
 import ThankYou from "./components/ThankYou";
+import mobileBackground from "./img/bg-main-mobile.png";
+import desktopBackground from "./img/bg-main-desktop.png";
 
 export interface FormTypes {
   cardholder: string;
@@ -29,7 +29,7 @@ const schema = yup.object({
     .string()
     .required("Can’t be blank")
     .matches(/^[0-9]*$/, "Wrong formats, numbers only")
-    .length(12, "Should be 12 digits"),
+    .length(16, "Should be 16 digits"),
   monthinput: yup
     .string()
     .required("Can’t be blank")
@@ -46,9 +46,8 @@ const schema = yup.object({
     .matches(/^[0-9]*$/, "Wrong formats, numbers only")
     .length(3, "Should be 3 digits"),
 });
-function App() {
-  const [submitted, setSubmitted] = useState<boolean>(false);
 
+function App() {
   const {
     register,
     handleSubmit,
@@ -58,9 +57,11 @@ function App() {
   } = useForm<FormTypes>({
     resolver: yupResolver(schema),
   });
+
+  const [submitted, setSubmitted] = useState<boolean>(false);
+
   const onSubmit: SubmitHandler<FormTypes> = (data) => {
     setSubmitted(true);
-    console.log(data);
   };
 
   return (
@@ -124,6 +125,7 @@ const Wrapper = styled.div`
     background-repeat: no-repeat;
     width: 483px;
     height: 100vh;
+    min-height: 100%;
   }
 `;
 

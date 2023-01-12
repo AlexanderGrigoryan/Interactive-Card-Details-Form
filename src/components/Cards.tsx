@@ -1,7 +1,5 @@
-import React from "react";
-import { FieldErrorsImpl, FieldValues } from "react-hook-form";
-import { UseFormWatch } from "react-hook-form/dist/types/form";
 import styled from "styled-components";
+import { UseFormWatch } from "react-hook-form/dist/types/form";
 import { FormTypes } from "../App";
 import cardBackImage from "../img/bg-card-back.png";
 import cardFrontImage from "../img/bg-card-front.png";
@@ -12,35 +10,57 @@ interface CardsProps {
 
 function Cards(props: CardsProps) {
   const { watch } = props;
-  let displayCardNumber = watch("cardnumber");
+
   const displayCardholder = watch("cardholder");
   const displayCvcCode = watch("cvcinput");
   const displayMonth = watch("monthinput");
   const displayYear = watch("yearinput");
+  const displayCardNumber = watch("cardnumber");
+
+  let startingNumbers = "0000 0000 0000 0000";
+
+  if (displayCardNumber) {
+    const newCardNumber = displayCardNumber.toString();
+    const fromOneToFour = newCardNumber.slice(0, 4);
+    const fromFourToEight = newCardNumber.slice(4, 8);
+    const fromEightToTwelve = newCardNumber.slice(8, 12);
+    const fromTwelveToSixteen = newCardNumber.slice(12, 16);
+
+    startingNumbers = `${fromOneToFour} ${fromFourToEight} ${fromEightToTwelve} ${fromTwelveToSixteen}`;
+  }
 
   return (
     <Container>
       <CardsBlock>
         <CardBack>
-          <CvcCode>{displayCvcCode ? displayCvcCode : "000"}</CvcCode>
+          <CvcCode>
+            {displayCvcCode && displayCvcCode.toString().length <= 3
+              ? displayCvcCode
+              : "000"}
+          </CvcCode>
         </CardBack>
         <CardFront>
           <Circles>
             <BigCircle></BigCircle>
             <SmallCircle></SmallCircle>
           </Circles>
-          <CardNumber>
-            {displayCardNumber ? displayCardNumber : "0000 0000 0000 0000"}
-          </CardNumber>
+          <CardNumber>{startingNumbers}</CardNumber>
           <CardInfo>
-            <Cardholder>
-              {displayCardholder
-                ? displayCardholder.toUpperCase()
-                : "JANE APPLESEED"}
-            </Cardholder>
+            <CardHolderWrapper>
+              <Cardholder>
+                {displayCardholder
+                  ? displayCardholder.toUpperCase()
+                  : "JANE APPLESEED"}
+              </Cardholder>
+            </CardHolderWrapper>
             <CardDate>
-              {displayMonth ? displayMonth : "00"}/
-              {displayYear ? displayYear : "00"}
+              {displayMonth && displayMonth.toString().length <= 2
+                ? displayMonth
+                : "00"}
+              /
+              {displayYear && displayYear.toString().length <= 2
+                ? displayYear
+                : "00"}
             </CardDate>
           </CardInfo>
         </CardFront>
@@ -55,9 +75,9 @@ const Container = styled.div`
   width: 375px;
 
   @media screen and (min-width: 1024px) {
+    display: flex;
     width: 100%;
     padding-left: 297px;
-    display: flex;
   }
 `;
 
@@ -78,11 +98,11 @@ const CardBack = styled.div`
   width: 286px;
   height: 157px;
   border-radius: 6px;
+  display: flex;
+  flex-direction: column;
   align-self: flex-end;
   padding-right: 37px;
   padding-top: 71.64px;
-  display: flex;
-  flex-direction: column;
 
   @media screen and (min-width: 1024px) {
     order: 2;
@@ -90,11 +110,11 @@ const CardBack = styled.div`
 `;
 
 const CvcCode = styled.div`
-  align-self: flex-end;
   font-size: 9px;
   font-weight: 500;
   line-height: 11px;
   letter-spacing: 1.2857142686843872px;
+  align-self: flex-end;
   color: #ffffff;
 `;
 
@@ -110,9 +130,7 @@ const CardFront = styled.div`
 
   @media screen and (min-width: 1024px) {
     order: 1;
-    margin-bottom: 37px;
-    margin-top: 0;
-    margin-left: -54px;
+    margin: 0 0 37px -54px;
   }
 `;
 
@@ -126,8 +144,8 @@ const Circles = styled.div`
 const BigCircle = styled.div`
   width: 30.18633460998535px;
   height: 30px;
-  background: #ffffff;
   border-radius: 50%;
+  background: #ffffff;
 `;
 
 const SmallCircle = styled.div`
@@ -152,7 +170,19 @@ const CardInfo = styled.div`
   margin-top: 17px;
 `;
 
+const CardHolderWrapper = styled.div`
+  width: 200px;
+  height: 22px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
 const Cardholder = styled.p`
+  width: 100%;
+  max-height: 22px;
+  word-break: break-all;
   font-size: 9px;
   font-weight: 500;
   line-height: 11px;
@@ -167,5 +197,3 @@ const CardDate = styled.p`
   letter-spacing: 1.2857142686843872px;
   color: #ffffff;
 `;
-
-const Error = styled.p``;

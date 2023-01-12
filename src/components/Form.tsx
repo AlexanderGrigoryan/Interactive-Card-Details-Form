@@ -1,15 +1,10 @@
-import React from "react";
-import {
-  FieldErrorsImpl,
-  FieldValues,
-  UseFormRegister,
-} from "react-hook-form/dist/types";
+import styled, { css } from "styled-components";
+import { FormTypes } from "../App";
+import { FieldErrorsImpl, UseFormRegister } from "react-hook-form/dist/types";
 import {
   SubmitHandler,
   UseFormHandleSubmit,
 } from "react-hook-form/dist/types/form";
-import styled, { css } from "styled-components";
-import { FormTypes } from "../App";
 
 interface FormProps {
   register: UseFormRegister<FormTypes>;
@@ -93,9 +88,6 @@ const FormContainer = styled.form`
   display: flex;
   flex-direction: column;
   row-gap: 20px;
-
-  @media screen and (min-width: 1024px) {
-  }
 `;
 
 const Cardholder = styled.div`
@@ -109,15 +101,14 @@ const Label = styled.label`
   line-height: 15px;
   letter-spacing: 2px;
   text-transform: uppercase;
-  color: #21092f;
   white-space: nowrap;
   margin-bottom: 9px;
+  color: #21092f;
 `;
 
 const CardholderInput = styled.input(
   (props: { errors: Partial<FieldErrorsImpl<FormTypes>> }) => css`
     width: 100%;
-
     height: 45px;
     border-radius: 8px;
     padding-left: 16px;
@@ -336,6 +327,7 @@ const SubmitButton = styled.button`
 `;
 
 const Error = styled.p`
+  height: 10px;
   font-size: 12px;
   font-weight: 500;
   line-height: 15px;
