@@ -8,7 +8,7 @@ import {
   SubmitHandler,
   UseFormHandleSubmit,
 } from "react-hook-form/dist/types/form";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { FormTypes } from "../App";
 
 interface FormProps {
@@ -26,6 +26,7 @@ function Form(props: FormProps) {
       <Cardholder>
         <Label htmlFor="cardholder">Cardholder Name</Label>
         <CardholderInput
+          errors={errors}
           type="text"
           id="cardholder"
           placeholder="e.g. Jane Appleseed"
@@ -36,6 +37,7 @@ function Form(props: FormProps) {
       <CardNumber>
         <Label htmlFor="cardnumber">Card Number</Label>
         <CardNumberInput
+          errors={errors}
           type="text"
           id="cardnumber"
           placeholder="e.g. 1234 5678 9123 0000"
@@ -49,6 +51,7 @@ function Form(props: FormProps) {
           <Date>
             <MonthInputContainer>
               <MonthInput
+                errors={errors}
                 type="text"
                 id="monthinput"
                 placeholder="MM"
@@ -58,6 +61,7 @@ function Form(props: FormProps) {
             </MonthInputContainer>
             <YearInputContainer>
               <YearInput
+                errors={errors}
                 type="text"
                 placeholder="YY"
                 {...register("yearinput")}
@@ -69,6 +73,7 @@ function Form(props: FormProps) {
         <Cvc>
           <Label htmlFor="cvcinput">CVC</Label>
           <CvcInput
+            errors={errors}
             type="text"
             id="cvcinput"
             placeholder="e.g. 123"
@@ -106,64 +111,76 @@ const Label = styled.label`
   margin-bottom: 9px;
 `;
 
-const CardholderInput = styled.input`
-  width: 100%;
-  height: 45px;
-  border-radius: 8px;
-  padding-left: 16px;
-  background: #ffffff;
-  border: 1px solid #dfdee0;
+const CardholderInput = styled.input(
+  (props: { errors: Partial<FieldErrorsImpl<FormTypes>> }) => css`
+    width: 100%;
+    height: 45px;
+    border-radius: 8px;
+    padding-left: 16px;
+    background: #ffffff;
+    border: ${props.errors.cardholder?.message
+      ? "1px solid #FF5050"
+      : "1px solid #dfdee0"};
 
-  font-family: "Space Grotesk", sans-serif;
-  font-size: 18px;
-  font-weight: 500;
-  line-height: 23px;
-  color: #21092f;
-
-  &::placeholder {
+    font-family: "Space Grotesk", sans-serif;
     font-size: 18px;
     font-weight: 500;
     line-height: 23px;
     color: #21092f;
-    opacity: 0.25;
-  }
 
-  &:focus {
-    outline: 1px solid #6348fe;
-  }
-`;
+    &::placeholder {
+      font-size: 18px;
+      font-weight: 500;
+      line-height: 23px;
+      color: #21092f;
+      opacity: 0.25;
+    }
+
+    &:focus {
+      outline: ${props.errors.cardholder?.message
+        ? "none"
+        : "1px solid #6348fe"};
+    }
+  `
+);
 
 const CardNumber = styled.div`
   display: flex;
   flex-direction: column;
 `;
 
-const CardNumberInput = styled.input`
-  width: 100%;
-  height: 45px;
-  border-radius: 8px;
-  padding-left: 16px;
-  background: #ffffff;
-  border: 1px solid #dfdee0;
+const CardNumberInput = styled.input(
+  (props: { errors: Partial<FieldErrorsImpl<FormTypes>> }) => css`
+    width: 100%;
+    height: 45px;
+    border-radius: 8px;
+    padding-left: 16px;
+    background: #ffffff;
+    border: ${props.errors.cardnumber?.message
+      ? "1px solid #FF5050"
+      : "1px solid #dfdee0"};
 
-  font-family: "Space Grotesk", sans-serif;
-  font-size: 18px;
-  font-weight: 500;
-  line-height: 23px;
-  color: #21092f;
-
-  &::placeholder {
+    font-family: "Space Grotesk", sans-serif;
     font-size: 18px;
     font-weight: 500;
     line-height: 23px;
     color: #21092f;
-    opacity: 0.25;
-  }
 
-  &:focus {
-    outline: 1px solid #6348fe;
-  }
-`;
+    &::placeholder {
+      font-size: 18px;
+      font-weight: 500;
+      line-height: 23px;
+      color: #21092f;
+      opacity: 0.25;
+    }
+
+    &:focus {
+      outline: ${props.errors.cardnumber?.message
+        ? "none"
+        : "1px solid #6348fe"};
+    }
+  `
+);
 
 const Info = styled.div`
   display: flex;
@@ -184,66 +201,78 @@ const MonthInputContainer = styled.div`
   flex-direction: column;
 `;
 
-const MonthInput = styled.input`
-  width: 100%;
-  max-width: 72px;
-  height: 45px;
-  border-radius: 8px;
-  padding-left: 16px;
-  background: #ffffff;
-  border: 1px solid #dfdee0;
+const MonthInput = styled.input(
+  (props: { errors: Partial<FieldErrorsImpl<FormTypes>> }) => css`
+    width: 100%;
+    max-width: 72px;
+    height: 45px;
+    border-radius: 8px;
+    padding-left: 16px;
+    background: #ffffff;
+    border: ${props.errors.monthinput?.message
+      ? "1px solid #FF5050"
+      : "1px solid #dfdee0"};
 
-  font-family: "Space Grotesk", sans-serif;
-  font-size: 18px;
-  font-weight: 500;
-  line-height: 23px;
-  color: #21092f;
-
-  &::placeholder {
+    font-family: "Space Grotesk", sans-serif;
     font-size: 18px;
     font-weight: 500;
     line-height: 23px;
     color: #21092f;
-    opacity: 0.25;
-  }
 
-  &:focus {
-    outline: 1px solid #6348fe;
-  }
-`;
+    &::placeholder {
+      font-size: 18px;
+      font-weight: 500;
+      line-height: 23px;
+      color: #21092f;
+      opacity: 0.25;
+    }
+
+    &:focus {
+      outline: ${props.errors.monthinput?.message
+        ? "none"
+        : "1px solid #6348fe"};
+    }
+  `
+);
 
 const YearInputContainer = styled.div`
   display: flex;
   flex-direction: column;
 `;
 
-const YearInput = styled.input`
-  width: 100%;
-  max-width: 72px;
-  height: 45px;
-  border-radius: 8px;
-  padding-left: 16px;
-  background: #ffffff;
-  border: 1px solid #dfdee0;
+const YearInput = styled.input(
+  (props: { errors: Partial<FieldErrorsImpl<FormTypes>> }) => css`
+    width: 100%;
+    max-width: 72px;
+    height: 45px;
+    border-radius: 8px;
+    padding-left: 16px;
+    background: #ffffff;
+    border: ${props.errors.yearinput?.message
+      ? "1px solid #FF5050"
+      : "1px solid #dfdee0"};
 
-  font-family: "Space Grotesk", sans-serif;
-  font-size: 18px;
-  font-weight: 500;
-  line-height: 23px;
-  color: #21092f;
-
-  &::placeholder {
+    font-family: "Space Grotesk", sans-serif;
     font-size: 18px;
     font-weight: 500;
     line-height: 23px;
     color: #21092f;
-    opacity: 0.25;
-  }
 
-  &:focus {
-    outline: 1px solid #6348fe;
-  }
-`;
+    &::placeholder {
+      font-size: 18px;
+      font-weight: 500;
+      line-height: 23px;
+      color: #21092f;
+      opacity: 0.25;
+    }
+
+    &:focus {
+      outline: ${props.errors.yearinput?.message
+        ? "none"
+        : "1px solid #6348fe"};
+    }
+  `
+);
 
 const Cvc = styled.div`
   display: flex;
@@ -251,33 +280,37 @@ const Cvc = styled.div`
   margin-top: 3px;
 `;
 
-const CvcInput = styled.input`
-  width: 100%;
-  max-width: 164px;
-  height: 45px;
-  border-radius: 8px;
-  padding-left: 16px;
-  background: #ffffff;
-  border: 1px solid #dfdee0;
+const CvcInput = styled.input(
+  (props: { errors: Partial<FieldErrorsImpl<FormTypes>> }) => css`
+    width: 100%;
+    max-width: 164px;
+    height: 45px;
+    border-radius: 8px;
+    padding-left: 16px;
+    background: #ffffff;
+    border: ${props.errors.cvcinput?.message
+      ? "1px solid #FF5050"
+      : "1px solid #dfdee0"};
 
-  font-family: "Space Grotesk", sans-serif;
-  font-size: 18px;
-  font-weight: 500;
-  line-height: 23px;
-  color: #21092f;
-
-  &::placeholder {
+    font-family: "Space Grotesk", sans-serif;
     font-size: 18px;
     font-weight: 500;
     line-height: 23px;
     color: #21092f;
-    opacity: 0.25;
-  }
 
-  &:focus {
-    outline: 1px solid #6348fe;
-  }
-`;
+    &::placeholder {
+      font-size: 18px;
+      font-weight: 500;
+      line-height: 23px;
+      color: #21092f;
+      opacity: 0.25;
+    }
+
+    &:focus {
+      outline: ${props.errors.cvcinput?.message ? "none" : "1px solid #6348fe"};
+    }
+  `
+);
 
 const SubmitButton = styled.button`
   width: 100%;

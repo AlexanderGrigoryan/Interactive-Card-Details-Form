@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import GlobalStyles from "./components/GlobalStyles";
 import { Helmet, HelmetProvider } from "react-helmet-async";
@@ -9,6 +9,7 @@ import { useForm } from "react-hook-form";
 import { FieldValues, SubmitHandler } from "react-hook-form/dist/types";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import ThankYou from "./components/ThankYou";
 
 export interface FormTypes {
   cardholder: string;
@@ -45,15 +46,21 @@ const schema = yup.object({
     .length(3, "Should be 3 digits"),
 });
 function App() {
+  const [submitted, setSubmitted] = useState<boolean>(false);
+
   const {
     register,
     handleSubmit,
     watch,
+    reset,
     formState: { errors },
   } = useForm<FormTypes>({
     resolver: yupResolver(schema),
   });
-  const onSubmit: SubmitHandler<FormTypes> = (data) => console.log(data);
+  const onSubmit: SubmitHandler<FormTypes> = (data) => {
+    setSubmitted(true);
+    console.log(data);
+  };
 
   return (
     <>
@@ -71,12 +78,16 @@ function App() {
         <Cards watch={watch} />
       </Wrapper>
       <FormWrapper>
-        <Form
-          register={register}
-          handleSubmit={handleSubmit}
-          onSubmit={onSubmit}
-          errors={errors}
-        />
+        {!submitted ? (
+          <Form
+            register={register}
+            handleSubmit={handleSubmit}
+            onSubmit={onSubmit}
+            errors={errors}
+          />
+        ) : (
+          <ThankYou setSubmitted={setSubmitted} reset={reset} />
+        )}
       </FormWrapper>
     </>
   );

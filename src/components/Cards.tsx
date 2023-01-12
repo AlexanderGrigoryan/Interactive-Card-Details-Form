@@ -12,8 +12,7 @@ interface CardsProps {
 
 function Cards(props: CardsProps) {
   const { watch } = props;
-
-  const displayCardNumber = watch("cardnumber");
+  let displayCardNumber = watch("cardnumber");
   const displayCardholder = watch("cardholder");
   const displayCvcCode = watch("cvcinput");
   const displayMonth = watch("monthinput");
@@ -46,7 +45,6 @@ function Cards(props: CardsProps) {
           </CardInfo>
         </CardFront>
       </CardsBlock>
-      
     </Container>
   );
 }
