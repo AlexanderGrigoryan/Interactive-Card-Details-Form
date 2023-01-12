@@ -53,12 +53,22 @@ export default Cards;
 
 const Container = styled.div`
   width: 375px;
+
+  @media screen and (min-width: 1024px) {
+    width: 100%;
+    padding-left: 297px;
+    display: flex;
+  }
 `;
 
 const CardsBlock = styled.div`
   display: flex;
   flex-direction: column;
   padding: 64px 16px 0 16px;
+
+  @media screen and (min-width: 1024px) {
+    margin-left: 20px;
+  }
 `;
 
 const CardBack = styled.div`
@@ -70,9 +80,13 @@ const CardBack = styled.div`
   border-radius: 6px;
   align-self: flex-end;
   padding-right: 37px;
-  padding-top: 73.64px;
+  padding-top: 71.64px;
   display: flex;
   flex-direction: column;
+
+  @media screen and (min-width: 1024px) {
+    order: 2;
+  }
 `;
 
 const CvcCode = styled.div`
@@ -93,6 +107,13 @@ const CardFront = styled.div`
   border-radius: 6px;
   margin-top: -68px;
   padding: 18px 20px 21px 19px;
+
+  @media screen and (min-width: 1024px) {
+    order: 1;
+    margin-bottom: 37px;
+    margin-top: 0;
+    margin-left: -54px;
+  }
 `;
 
 const Circles = styled.div`

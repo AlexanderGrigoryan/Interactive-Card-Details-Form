@@ -3,6 +3,7 @@ import styled from "styled-components";
 import GlobalStyles from "./components/GlobalStyles";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import mobileBackground from "./img/bg-main-mobile.png";
+import desktopBackground from "./img/bg-main-desktop.png";
 import Cards from "./components/Cards";
 import Form from "./components/Form";
 import { useForm } from "react-hook-form";
@@ -73,27 +74,36 @@ function App() {
           />
         </Helmet>
       </HelmetProvider>
-
-      <Wrapper>
-        <Cards watch={watch} />
-      </Wrapper>
-      <FormWrapper>
-        {!submitted ? (
-          <Form
-            register={register}
-            handleSubmit={handleSubmit}
-            onSubmit={onSubmit}
-            errors={errors}
-          />
-        ) : (
-          <ThankYou setSubmitted={setSubmitted} reset={reset} />
-        )}
-      </FormWrapper>
+      <MainContainer>
+        <Wrapper>
+          <Cards watch={watch} />
+        </Wrapper>
+        <FormWrapper>
+          {!submitted ? (
+            <Form
+              register={register}
+              handleSubmit={handleSubmit}
+              onSubmit={onSubmit}
+              errors={errors}
+            />
+          ) : (
+            <ThankYou setSubmitted={setSubmitted} reset={reset} />
+          )}
+        </FormWrapper>
+      </MainContainer>
     </>
   );
 }
 
 export default App;
+
+const MainContainer = styled.main`
+  @media screen and (min-width: 1024px) {
+    display: flex;
+    align-items: center;
+    column-gap: 349px;
+  }
+`;
 
 const Wrapper = styled.div`
   background: url(${mobileBackground});
@@ -107,6 +117,14 @@ const Wrapper = styled.div`
   justify-content: center;
   align-items: center;
   margin-bottom: 90px;
+
+  @media screen and (min-width: 1024px) {
+    background: url(${desktopBackground});
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 483px;
+    height: 100vh;
+  }
 `;
 
 const FormWrapper = styled.div`

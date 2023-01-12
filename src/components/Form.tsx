@@ -93,6 +93,9 @@ const FormContainer = styled.form`
   display: flex;
   flex-direction: column;
   row-gap: 20px;
+
+  @media screen and (min-width: 1024px) {
+  }
 `;
 
 const Cardholder = styled.div`
@@ -114,6 +117,7 @@ const Label = styled.label`
 const CardholderInput = styled.input(
   (props: { errors: Partial<FieldErrorsImpl<FormTypes>> }) => css`
     width: 100%;
+
     height: 45px;
     border-radius: 8px;
     padding-left: 16px;
@@ -140,6 +144,10 @@ const CardholderInput = styled.input(
       outline: ${props.errors.cardholder?.message
         ? "none"
         : "1px solid #6348fe"};
+    }
+
+    @media screen and (min-width: 1024px) {
+      min-width: 381px;
     }
   `
 );
