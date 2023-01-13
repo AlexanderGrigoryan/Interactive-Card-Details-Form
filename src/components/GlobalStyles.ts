@@ -11,6 +11,8 @@ const GlobalStyles = createGlobalStyle`
 body {
   font-family: 'Space Grotesk', sans-serif;
   background: #F2F2F2;
+  width: 100vw;
+  height: 100vh;
 }
 `;
 

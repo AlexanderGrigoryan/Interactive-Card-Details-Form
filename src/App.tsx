@@ -1,11 +1,11 @@
 import styled from "styled-components";
 import GlobalStyles from "./components/GlobalStyles";
+import schema from "./schema";
 import { useState } from "react";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import { useForm } from "react-hook-form";
 import { SubmitHandler } from "react-hook-form/dist/types";
 import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
 import Cards from "./components/Cards";
 import Form from "./components/Form";
 import ThankYou from "./components/ThankYou";
@@ -19,33 +19,6 @@ export interface FormTypes {
   yearinput: number;
   cvcinput: number;
 }
-
-const schema = yup.object({
-  cardholder: yup
-    .string()
-    .required("Can’t be blank")
-    .matches(/^[A-Za-z\s]*$/, "Wrong formats, letters only"),
-  cardnumber: yup
-    .string()
-    .required("Can’t be blank")
-    .matches(/^[0-9]*$/, "Wrong formats, numbers only")
-    .length(16, "Should be 16 digits"),
-  monthinput: yup
-    .string()
-    .required("Can’t be blank")
-    .matches(/^[0-9]*$/, "Wrong formats, numbers only")
-    .length(2, "Should be 2 digits"),
-  yearinput: yup
-    .string()
-    .required("Can’t be blank")
-    .matches(/^[0-9]*$/, "Wrong formats, numbers only")
-    .length(2, "Should be 2 digits"),
-  cvcinput: yup
-    .string()
-    .required("Can’t be blank")
-    .matches(/^[0-9]*$/, "Wrong formats, numbers only")
-    .length(3, "Should be 3 digits"),
-});
 
 function App() {
   const {
@@ -103,6 +76,8 @@ const MainContainer = styled.main`
     display: flex;
     align-items: center;
     column-gap: 349px;
+    width: 100%;
+    height: 100%;
   }
 `;
 
@@ -121,11 +96,10 @@ const Wrapper = styled.div`
 
   @media screen and (min-width: 1024px) {
     background: url(${desktopBackground});
-    background-size: cover;
-    background-repeat: no-repeat;
+    background-size: 100% 100%;
     width: 483px;
-    height: 100vh;
-    min-height: 100%;
+    height: 100%;
+    margin-bottom: 0;
   }
 `;
 
